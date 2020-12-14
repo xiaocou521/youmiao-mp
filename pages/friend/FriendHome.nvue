@@ -1,0 +1,118 @@
+<template>
+	<view>
+		<u-button type="info" @click="authCamera">相机授权</u-button>
+		<u-button type="info" @click="authUserInfo">用户信息授权</u-button>
+		<u-button type="info" open-type="getUserInfo" @getuserinfo="authLogin">小程序登录授权</u-button>
+		<u-button type="info" open-type="share">微信分享朋友</u-button>
+		<u-button type="info" @click="shareFriendCricle">微信分享朋友圈(小程序暂不支持)</u-button>
+		<u-button size="medium">夜雨</u-button>
+		<u-button size="mini">十年灯</u-button>
+		<u-button :plain="true">斩棘</u-button>
+		<u-button :ripple="true" ripple-bg-color="#909399">之约</u-button>
+		<u-button :custom-style="customStyle">雪月夜</u-button>
+		<u-tag text="雪月夜" type="success" />
+		<u-picker v-model="show" mode="time"></u-picker>
+		<u-button @click="show = true">打开</u-button>
+		<u-icon name="daiwa" custom-prefix="adma-icon" size="100" color="#888888"></u-icon>
+		<button class="adma-icon adma-icon-shenhezhong" style="font-size: 50px;"></button>
+		<button open-type="exit" target="miniProgram">退出程序</button>
+		<!-- <view class="adma-icon adma-icon-daiwaxuanzhong"></view> -->
+		<BottomTabbar></BottomTabbar>
+		<!-- <u-button @click="show = true">打开modal</u-button> -->
+	</view>
+</template>
+
+<script>
+	import BottomTabbar from "@/components/BottomTabbar.vue"
+	export default {
+		components: {
+			BottomTabbar
+		},
+		data() {
+			return {
+				share: {
+					title: '喵喵喵喵',
+					path: '/pages/first/FirstHome',
+					imageUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606817590225&di=2f0fd4af3c1ab6d9111955ffe709249a&imgtype=0&src=http%3A%2F%2Fimg.ewebweb.com%2Fuploads%2F20191209%2F20%2F1575894691-QIpJzqPyxS.jpeg',
+					desc: '猫中刘诗诗高清美图',
+					content: '治愈的小眼神，心都融化啦'
+				},
+				showModal: false,
+				show: false,
+				src: 'https://cdn.uviewui.com/uview/example/fade.jpg',
+				customStyle: {
+					marginTop: '20px', // 注意驼峰命名，并且值必须用引号包括，因为这是对象
+					color: 'red'
+				}
+			}
+		},
+		methods: {
+			//分享到微信朋友圈
+			shareFriendCricle() {
+				uni.share({
+				    provider: "weixin",
+				    scene: "WXSenceTimeline",
+				    type: 1,
+				    summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
+				    success: function (res) {
+				        console.log("success:" + JSON.stringify(res));
+				    },
+				    fail: function (err) {
+				        console.log("fail:" + JSON.stringify(err));
+				    }
+				});
+			},
+			// 授权测试
+			authUserInfo() {
+				this.$uniAuth.authorizer("scope.userInfo", function(res) {
+					console.log('用户信息授权成功了')
+					console.log('success', res);
+					// 获取用户信息
+					uni.getUserInfo({
+						provider: 'weixin',
+						success: function(infoRes) {
+							console.log('用户昵称为：' + JSON.stringify(infoRes));
+							console.log('用户昵称为：' + infoRes.userInfo.nickName);
+						}
+					});
+				}, function(err) {
+					console.log('denyback', err);
+				}, function(err) {
+					console.log('deniedBack', err);
+				});
+			},
+			// 相机授权
+			authCamera() {
+				this.$uniAuth.authorizer("scope.camera", function(res) {
+					console.log('相机授权成功了')
+					console.log('success', res);
+					uni.chooseImage({
+
+					})()
+				}, function(err) {
+					console.log('denyback', err);
+				}, function(err) {
+					console.log('deniedBack', err);
+				});
+			},
+			// 登陆授权
+			authLogin() {
+				// 新方法
+				this.$uniLogin.authLogin('weixin', function(res) {
+					console.log('success', res);
+					console.log('用户昵称为：' + JSON.stringify(res));
+					console.log('用户昵称为：' + res.userInfo.nickName);
+				});
+			},
+			getuserinfo(res) {
+				console.log(res);
+			}
+		}
+	}
+</script>
+
+<style lang="scss">
+	.item {
+		border: 1px solid $uni-border-color;
+	}
+</style>

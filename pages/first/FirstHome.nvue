@@ -1,0 +1,112 @@
+<template>
+	<view class="wrapper">
+		<view class="panel-tab">
+			<u-tabs :list="list" :is-scroll="false" :current="current" @change="change" bar-width="80" inactive-color="#999"
+			 active-color="#333" :bar-style="barStyle"></u-tabs>
+		</view>
+		<!-- <u-navbar :is-back="false" title="这个一navbar"></u-navbar> -->
+		<view class="container">
+			<view class="panel">
+				<!-- <view class="panel-tab">
+					<u-tabs :list="list" :is-scroll="false" :current="current" @change="change" bar-width="80" inactive-color="#999"
+					 active-color="#333" :bar-style="barStyle"></u-tabs>
+				</view> -->
+				<view class="panel-info">
+					<FirstHomeFind ref="firstHomeFindRef" v-if="current === 1"></FirstHomeFind>
+				</view>
+				<view class="panel-msg">
+
+				</view>
+			</view>
+			<view class="panel menu">
+
+			</view>
+			<view class="panel menu">
+
+			</view>
+		</view>
+		<BottomTabbar></BottomTabbar>
+	</view>
+</template>
+
+<script>
+	import BottomTabbar from "@/components/BottomTabbar.vue"
+	import FirstHomeFind from "./components/FirstHomeFind.nvue"
+	export default {
+		components: {
+			BottomTabbar,
+			FirstHomeFind
+		},
+		data() {
+			return {
+				barStyle: {
+					'background-color': '#b6a2de'
+				},
+				list: [{
+					name: '关注'
+				}, {
+					name: '发现'
+				}, {
+					name: '附近的猫',
+					count: 3
+				}],
+				current: 1,
+				searchHolderText: "大家都在搜“流浪猫狗不流浪”"
+			}
+		},
+		onReachBottom() {
+			if (this.current === 1) {
+				this.$refs.firstHomeFindRef.reachBottom()
+			}
+		},
+		methods: {
+			change(index) {
+				this.current = index;
+			}
+		}
+	}
+</script>
+
+<style lang="scss">
+	.wrapper {
+		background-color: $uni-bg-color;
+	}
+	
+	.panel-tab {
+		position: fixed;
+		width: $uni-box-width-full;
+		border-bottom-width: 1rpx;
+		border-bottom-color: $uni-bg-color-grey;
+		top: 0;
+		right: 0;
+		left: 0;
+		z-index: 998;
+	}
+
+	.container {
+		@include uni-flex-column-center;
+		font-size: $uni-font-size-base;
+		color: $uni-text-color;
+
+		.panel {
+			@include uni-flex-column-center;
+			width: $uni-box-width-normal;
+			position: relative;
+			// margin-top: 80rpx;
+
+			// .panel-tab {
+			// 	position: fixed;
+			// 	width: $uni-box-width-full;
+			// 	border-bottom-width: 1rpx;
+			// 	border-bottom-color: $uni-bg-color-grey;
+			// 	top: 0;
+			// 	z-index: 1;
+			// }
+
+			.panel-info {
+				@include uni-flex-row-around-center;
+				width: 100%;
+			}
+		}
+	}
+</style>

@@ -1,0 +1,19 @@
+<template>
+	<div>
+		这是一个“消息”首页
+		<BottomTabbar></BottomTabbar>
+	</div>
+</template>
+
+<script>
+	import BottomTabbar from "@/components/BottomTabbar.vue"
+	export default {
+		components: {
+			BottomTabbar
+		}
+	}
+</script>
+
+<style>
+
+</style>

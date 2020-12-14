@@ -1,0 +1,58 @@
+<template>
+	<div>
+		<u-modal v-model="showModal" content="点击确定进行授权">
+			<button open-type="getUserInfo" class="u-reset-button" slot="confirm-button" @getuserinfo="getuserinfo">确定</button>
+		</u-modal>
+		<text style="font-size: 32rpx;" class="rpx-font">这个一个rem测试</text>
+		<u-icon name="photo" color="#2979ff" size="100"></u-icon>
+		<u-icon label="uView" size="40" name="https://cdn.uviewui.com/uview/example/button.png"></u-icon>
+		<u-image width="100%" height="300rpx" :src="src"></u-image>
+		<u-image src="https://cdn.uviewui.com/uview/example/fade.jpg" mode="widthFix" shape="circle"></u-image>
+		<u-button type="info">信息按钮</u-button>
+		<u-button size="default">江湖</u-button>
+		<u-button size="medium">夜雨</u-button>
+		<u-button size="mini">十年灯</u-button>
+		<u-button :plain="true">斩棘</u-button>
+		<u-button :ripple="true" ripple-bg-color="#909399">之约</u-button>
+		<u-button :custom-style="customStyle">雪月夜</u-button>
+		<u-tag text="雪月夜" type="success" />
+		<u-picker v-model="show" mode="time"></u-picker>
+		<u-button @click="show = true">打开</u-button>
+		<u-icon name="daiwa" custom-prefix="adma-icon" size="100" color="#888888"></u-icon>
+		<button class="adma-icon adma-icon-shenhezhong" style="font-size: 50px;"></button>
+		<!-- <view class="adma-icon adma-icon-daiwaxuanzhong"></view> -->
+		<BottomTabbar></BottomTabbar>
+		<!-- <u-button @click="show = true">打开modal</u-button> -->
+	</div>
+</template>
+
+<script>
+	import BottomTabbar from "@/components/BottomTabbar.vue"
+	export default {
+		components: {
+			BottomTabbar
+		},
+		data() {
+			return {
+				showModal: false,
+				show: false,
+				src: 'https://cdn.uviewui.com/uview/example/fade.jpg',
+				customStyle: {
+						marginTop: '20px', // 注意驼峰命名，并且值必须用引号包括，因为这是对象
+						color: 'red'
+					}
+			}
+		},
+		methods: {
+			getuserinfo(res) {
+				console.log(res);
+			}
+		}
+	}
+</script>
+
+<style lang="scss">
+	.item {
+		border: 1px solid $uni-border-color;
+	}
+</style>

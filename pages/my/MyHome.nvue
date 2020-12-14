@@ -1,0 +1,198 @@
+<template>
+	<view class="wrapper">
+		<view class="container">
+			<view class="panel">
+				<view class="panel-header">
+					<view class="panel-header-portrait">
+						<u-avatar :src="src" size="large" :show-sex="true" sex-icon="woman"></u-avatar>
+					</view>
+					<text class="panel-header-name">{{ text }}</text>
+				</view>
+				<view class="panel-info">
+					<view class="panel-info-item">
+						<view class="info-item-num">100w</view>
+						<view class="info-item-name">关注</view>
+					</view>
+					<view class="panel-info-item">
+						<view class="info-item-num">12w</view>
+						<view class="info-item-name">粉丝</view>
+					</view>
+					<view class="panel-info-item">
+						<view class="info-item-num">13w</view>
+						<view class="info-item-name">动态</view>
+					</view>
+					<view class="panel-info-item">
+						<view class="info-item-num">30w</view>
+						<view class="info-item-name">获赞</view>
+					</view>
+				</view>
+				<view class="panel-line">
+					<u-line color="#f8f8f8"></u-line>
+				</view>
+				<view class="panel-msg">
+					<view class="panel-msg-item small">
+						<view class="msg-item-level">
+							<u-tag text="LV.1" type="warning" mode="dark" bg-color="#ffb980" />
+						</view>
+					</view>
+					<view class="panel-msg-item large">
+						<view class="msg-item-title">
+							魅力值：
+						</view>
+						<view class="msg-item-value">
+							155
+						</view>
+					</view>
+					<view class="panel-msg-item large">
+						<u-icon name="yingyang" custom-prefix="adma-icon" size="50" color="#ffb980"></u-icon>
+						<view class="msg-item-title">
+							罐头：
+						</view>
+						<view class="msg-item-value">
+							12
+						</view>
+					</view>
+					<view class="panel-msg-item small">
+						<view class="msg-item-button">
+							<u-tag text="兑换" type="error" mode="plain" shape="circle" />
+						</view>
+					</view>
+				</view>
+			</view>
+			<view class="panel menu">
+				<u-cell-group :border="false" style="width: 100%">
+					<u-cell-item icon="setting-fill" title="我的猫咪" @click="linkToMyKitty"></u-cell-item>
+					<u-cell-item icon="setting-fill" title="投食记录"></u-cell-item>
+					<u-cell-item icon="setting-fill" title="我的罐头" :border-bottom="false"></u-cell-item>
+				</u-cell-group>
+			</view>
+			<view class="panel menu">
+				<u-cell-group :border="false" style="width: 100%">
+					<u-cell-item icon="setting-fill" title="吐个槽"></u-cell-item>
+					<u-cell-item icon="setting-fill" title="侵权上报"></u-cell-item>
+					<u-cell-item icon="setting-fill" title="客服"></u-cell-item>
+					<u-cell-item icon="setting-fill" title="关于有喵" :border-bottom="false"></u-cell-item>
+				</u-cell-group>
+			</view>
+		</view>
+		<BottomTabbar></BottomTabbar>
+	</view>
+</template>
+
+<script>
+	import BottomTabbar from "@/components/BottomTabbar.vue"
+	export default {
+		components: {
+			BottomTabbar
+		},
+		onShow () {
+			
+		},
+		data() {
+			return {
+				src: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2119_s.jpg',
+				text: '宝妈王'
+			}
+		},
+		methods: {
+			// 跳转到我的猫咪
+			linkToMyKitty() {
+				uni.navigateTo({
+					url: "./mykitty/MyKitty"
+				})
+			}
+		}
+	}
+</script>
+
+<style lang="scss">
+	.wrapper {
+		// background-color: $uni-theme-section-one;
+		background-image: linear-gradient(to bottom, $uni-theme-section-one 300rpx, transparent 0);
+	}
+
+	.container {
+		@include uni-flex-column-center;
+		padding-top: 120rpx;
+		font-size: $uni-font-size-base;
+		color: $uni-text-color;
+
+		.panel {
+			@include uni-flex-column-center;
+			width: $uni-box-width-normal;
+			border-radius: $uni-border-radius-lg;
+			background-color: $uni-bg-color;
+			padding: $uni-spacing-row-lg $uni-spacing-row-sm;
+			box-shadow: $uni-box-shadow;
+			margin-top: $uni-spacing-col-lg;
+
+			.panel-header {
+				@include uni-flex-column-center;
+				margin-top: -100rpx;
+
+				.panel-header-portrait {
+					padding: $uni-img-spacing-sm;
+					border-radius: $uni-border-radius-circle;
+					background-color: $uni-bg-color;
+				}
+
+				.panel-header-name {
+					font-weight: bold;
+				}
+			}
+
+			.panel-info {
+				@include uni-flex-row-around-center;
+				width: 100%;
+				margin-top: $uni-spacing-col-lg;
+
+				.panel-info-item {
+					@include uni-flex-column-center;
+					flex: 1 1 0;
+
+					.info-item-name {
+						padding-top: $uni-spacing-col-sm;
+						color: $uni-text-color-grey;
+					}
+				}
+			}
+
+			.panel-line {
+				margin-top: $uni-spacing-col-lg;
+				width: 100%;
+			}
+
+			.panel-msg {
+				@include uni-flex-row-center;
+				width: 100%;
+				margin-top: $uni-spacing-col-lg;
+
+				.panel-msg-item {
+					@include uni-flex-row-center;
+
+					.msg-item-value {
+						color: $uni-color-error;
+					}
+				}
+
+				.panel-msg-item.small {
+					width: 145rpx;
+				}
+
+				.panel-msg-item.large {
+					width: 200rpx;
+				}
+			}
+
+			/deep/ .u-cell-box {
+				.u-cell-item-box {
+					flex-direction: column;
+				}
+			}
+		}
+
+		.panel.menu {
+			padding: 0 $uni-spacing-row-sm;
+		}
+	}
+</style>

@@ -1,0 +1,240 @@
+<template name="FirstHomeFind">
+	<view class="wrapper">
+		<view class="container">
+			<view class="panel">
+				<view class="panel-search">
+					<u-search class="panel-search-u" placeholder="searchHolderText" v-model="searchHolderText" :show-action="false" color="#999"></u-search>
+				</view>
+				<view class="panel-swiper">
+					<u-swiper :list="swiperList" :effect3d="true" mode="dot" indicator-pos="bottomCenter" :title="true" bg-color="#ffffff"></u-swiper>
+				</view>
+				<view class="panel-waterfall">
+					<u-waterfall v-model="flowList" ref="uWaterfall">
+						<template v-slot:left="{leftList}">
+							<view class="demo-warter" v-for="(item, index) in leftList" :key="index">
+								<!-- 警告：微信小程序中需要hx2.8.11版本才支持在template中结合其他组件，比如下方的lazy-load组件 -->
+								<u-lazy-load threshold="-450" border-radius="10" :image="item.image" :index="index"></u-lazy-load>
+								<view class="demo-title">
+									{{item.title}}
+								</view>
+								<u-badge type="primary" count="4" bgColor="#ffffff" color="#bdbdbd" :offset=[30,30]></u-badge>
+								<!-- <u-icon name="close-circle-fill" color="#ffffff" size="34" class="u-close" @click="remove(item.id)"></u-icon> -->
+							</view>
+						</template>
+						<template v-slot:right="{rightList}">
+							<view class="demo-warter" v-for="(item, index) in rightList" :key="index">
+								<u-lazy-load threshold="-450" border-radius="10" :image="item.image" :index="index"></u-lazy-load>
+								<view class="demo-title">
+									{{item.title}}
+								</view>
+								<u-icon name="play-circle" color="#ffffff" size="34" class="u-close" @click="remove(item.id)"></u-icon>
+								<!-- <u-icon name="close-circle-fill" color="#ffffff" size="34" class="u-close" @click="remove(item.id)"></u-icon> -->
+							</view>
+						</template>
+					</u-waterfall>
+					<u-loadmore bg-color="rgb(240, 240, 240)" :status="loadStatus" @loadmore="addRandomData"></u-loadmore>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				searchHolderText: "大家都在搜“流浪猫狗不流浪”",
+				swiperList: [{
+						image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606820731247&di=ac5275aa975acf9819440e23b4dc2126&imgtype=0&src=http%3A%2F%2Fpic25.nipic.com%2F20121105%2F5056611_112639548000_2.jpg',
+						title: '吧啦啦能量'
+					},
+					{
+						image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606820760885&di=555926a0160ffe71e137477e4e177cac&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F1%2F552374aa0e56e.jpg',
+						title: '猫中刘诗诗高清美图'
+					},
+					{
+						image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606820798814&di=70dc17b134a2a60e7c9016ff24b5e114&imgtype=0&src=http%3A%2F%2Fwww.deskcar.com%2Fdesktop%2Felse%2F20131221234738%2F18.jpg',
+						title: '恰肉肉时间到'
+					}
+				],
+				loadStatus: 'loadmore',
+				flowList: [],
+				list: [{
+						title: '吃饱饱啦，就可以睡觉觉啦',
+						image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606817590225&di=2f0fd4af3c1ab6d9111955ffe709249a&imgtype=0&src=http%3A%2F%2Fimg.ewebweb.com%2Fuploads%2F20191209%2F20%2F1575894691-QIpJzqPyxS.jpeg',
+					},
+					{
+						title: '治愈的小眼神，心都融化啦',
+						image: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=294399149,151706576&fm=26&gp=0.jpg',
+					},
+					{
+						title: '小猫咪的手手是温度计',
+						image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606819813345&di=9fca7be575191a86068006e601a7c070&imgtype=0&src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2F8435e5dde71190efc8f16ea9cd1b9d16fdfa60ba.jpg',
+					},
+					{
+						title: '月亮睡了你不睡，太阳起了你不起',
+						image: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2091781119,1691005313&fm=26&gp=0.jpg',
+					},
+					{
+						title: '今晚兔兔说晚安',
+						image: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1783714697,1711970372&fm=26&gp=0.jpg',
+					},
+					{
+						title: '别转过来看',
+						image: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=651235350,2763667500&fm=26&gp=0.jpg',
+					},
+					{
+						title: '奶音暴击！猛男必看系列！',
+						image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606820083986&di=af6980c9303ad459c92c8e050a088b97&imgtype=0&src=http%3A%2F%2Fwx4.sinaimg.cn%2Flarge%2Fbff7e0a5ly1g63nfopqczj20rs0fmqjf.jpg',
+					},
+					{
+						title: '这也太可爱了吧！',
+						image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606820098388&di=7c26423fb8e5d348742985dbe8f32585&imgtype=0&src=http%3A%2F%2Fwww.ichong123.com%2Ffiles%2F2015%2F9%2F16%2F0%2F2.png',
+					},
+					{
+						title: '精神小伙儿',
+						image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606820114659&di=98856324206b23aaa8f0e8db3460187e&imgtype=0&src=http%3A%2F%2Fimg.xiaohongshu.com%2Favatar%2F5f67f8c9db0552000121cae0.jpg%40240w_240h_90q_1e_1c_1x.jpg',
+					},
+					{
+						title: '四甜甜这个姿势好可爱哦',
+						image: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2618325115,1709252840&fm=26&gp=0.jpg',
+					},
+					{
+						title: '月有阴晴圆缺',
+						image: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3361767758,4184431243&fm=26&gp=0.jpg',
+					},
+				]
+			}
+		},
+		onLoad() {
+			this.addRandomData();
+		},
+		onReachBottom() {
+			this.loadStatus = 'loading';
+			// 模拟数据加载
+			setTimeout(() => {
+				this.addRandomData();
+				this.loadStatus = 'loadmore';
+			}, 1000)
+		},
+		methods: {
+			// 到达底部
+			reachBottom() {
+				this.loadStatus = 'loading';
+				// 模拟数据加载
+				setTimeout(() => {
+					this.addRandomData();
+					this.loadStatus = 'loadmore';
+				}, 1000)
+			},
+			addRandomData() {
+				for (let i = 0; i < 10; i++) {
+					let index = this.$u.random(0, this.list.length - 1);
+					// 先转成字符串再转成对象，避免数组对象引用导致数据混乱
+					let itemTemp = JSON.stringify(this.list[index])
+					let item = JSON.parse(itemTemp)
+					item.id = this.$u.guid();
+					this.flowList.push(item);
+				}
+			},
+			remove(id) {
+				this.$refs.uWaterfall.remove(id);
+			},
+			clear() {
+				this.$refs.uWaterfall.clear();
+			}
+		}
+	}
+</script>
+
+<style>
+	/* page不能写带scope的style标签中，否则无效 */
+	page {
+		background-color: rgb(240, 240, 240);
+	}
+</style>
+
+<style lang="scss" scoped>
+	.wrapper {
+		background-color: $uni-bg-color;
+	}
+
+	.container {
+		@include uni-flex-column-center;
+		font-size: $uni-font-size-base;
+		color: $uni-text-color;
+		margin-top: 80rpx;
+
+		.panel {
+			@include uni-flex-column-center;
+			width: $uni-box-width-normal;
+
+			.panel-search {
+				@include uni-flex-row-center;
+				width: $uni-box-width-normal;
+				margin-top: $uni-spacing-col-base;
+				.panel-search-u {
+					width: $uni-box-width-normal;
+				}
+			}
+
+			.panel-swiper {
+				width: 100%;
+				margin-top: $uni-spacing-col-base;
+			}
+
+			.panel-waterfall {
+				width: $uni-box-width-full;
+				// background-color: rgb(240, 240, 240);
+			}
+		}
+	}
+	.demo-warter {
+		border-radius: 8px;
+		margin: 5px;
+		background-color: #ffffff;
+		padding: 8px;
+		position: relative;
+	}
+	
+	.u-close {
+		position: absolute;
+		top: 32rpx;
+		right: 32rpx;
+	}
+	
+	.demo-image {
+		width: 100%;
+		border-radius: 4px;
+	}
+	
+	.demo-title {
+		font-size: 30rpx;
+		margin-top: 5px;
+		color: $u-main-color;
+	}
+	
+	.demo-tag-owner {
+		background-color: $u-type-error;
+		color: #FFFFFF;
+		display: flex;
+		align-items: center;
+		padding: 4rpx 14rpx;
+		border-radius: 50rpx;
+		font-size: 20rpx;
+		line-height: 1;
+	}
+	
+	.demo-tag-text {
+		border: 1px solid $u-type-primary;
+		color: $u-type-primary;
+		margin-left: 10px;
+		border-radius: 50rpx;
+		line-height: 1;
+		padding: 4rpx 14rpx;
+		display: flex;
+		align-items: center;
+		border-radius: 50rpx;
+		font-size: 20rpx;
+	}
+</style>
